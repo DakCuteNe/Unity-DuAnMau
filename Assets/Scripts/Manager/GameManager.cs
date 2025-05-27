@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
+
+public class GameManager : MonoBehaviour
+{
+    private int score = 0;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject gameoverUI;
+    private bool isGameOver = false;
+    void Start()
+    {
+        UpdateScore();
+        gameoverUI.SetActive(false); // Hide the Game Over UI at the start
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void AddScore(int points)
+    {
+        if (!isGameOver)
+        {
+        score += points;
+        UpdateScore();
+        }
+    }
+
+    private void UpdateScore()
+    {
+        scoreText.text = score.ToString();
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        score = 0;
+        Time.timeScale = 0f; // Stop the game
+        gameoverUI.SetActive(true); // Show the Game Over UI
+    }
+
+    public void RestartGame()
+    {
+        isGameOver = false;
+        score = 0;
+        UpdateScore();
+        Time.timeScale = 1f; // Resume the game
+        SceneManager.LoadScene("Level1");
+    }
+
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
+}   

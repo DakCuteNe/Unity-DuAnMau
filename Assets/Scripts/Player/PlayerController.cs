@@ -12,15 +12,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     private bool isGrounded;
     private Rigidbody2D rb;
+    private GameManager gameManager;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
     {
+        if (gameManager.IsGameOver())
+        {
+            rb.velocity = Vector2.zero; // Stop player movement when game is over
+            return;
+        }
         Movement();
         Jump();
         Attack();

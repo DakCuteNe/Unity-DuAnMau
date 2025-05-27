@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Coin
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -44,9 +46,15 @@ TagManager:
   - name: Ground
     uniqueID: 4236128581
     locked: 0
+  - name: ForceGround
+    uniqueID: 3152361519
+    locked: 0
   - name: Player
     uniqueID: 597500915
     locked: 0
-  - name: ForceGround
-    uniqueID: 3152361519
+  - name: Item
+    uniqueID: 3333838799
+    locked: 0
+  - name: UI
+    uniqueID: 500726069
     locked: 0
