@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 10f;
+    [SerializeField] private float climbSpeed = 3f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Animator animator;
     private bool isGrounded;
+    private bool isClimbing = false;
     private Rigidbody2D rb;
     private GameManager gameManager;
 
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
         Jump();
         Attack();
         UpdateAnimation();
+        ClimbLadder();
     }
 
     private void Movement()
@@ -67,5 +70,36 @@ public class PlayerController : MonoBehaviour
             // Add attack logic here, e.g., damage enemies
         }
     }
-    
+
+    private void ClimbLadder()
+    {
+        if (isClimbing)
+        {
+            float vertical = Input.GetAxis("Vertical");
+            rb.velocity = new Vector2(rb.velocity.x, vertical * climbSpeed);
+            rb.gravityScale = 0f;
+            animator.SetBool("IsClimbing", Mathf.Abs(vertical) > 0.1f);
+        }
+        else
+        {
+            rb.gravityScale = 1f;
+            animator.SetBool("IsClimbing", false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = false;
+        }
+    }
 }
