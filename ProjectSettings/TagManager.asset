@@ -9,6 +9,7 @@ TagManager:
   - Exit
   - Ladder
   - Enemy
+  - Key
   layers:
   - Default
   - TransparentFX

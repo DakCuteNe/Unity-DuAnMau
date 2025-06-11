@@ -15,17 +15,19 @@ public class PlayerController : MonoBehaviour
     private bool isClimbing = false;
     private Rigidbody2D rb;
     private GameManager gameManager;
+    private AudioManager audioManager;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         gameManager = FindObjectOfType<GameManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     void Update()
     {
-        if (gameManager.IsGameOver())
+        if (gameManager.IsGameOver()|| gameManager.IsGameWin())
         {
             rb.velocity = Vector2.zero; // Stop player movement when game is over
             return;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            audioManager.PlayJumpSound();
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         }
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
