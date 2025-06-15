@@ -7,4 +7,5 @@ public class SaveData
     public Vector3 playerPosition;
     public string mapBoundary;
     public string playerName;
+    public List<InventorySaveData> inventorySaveData;
 }

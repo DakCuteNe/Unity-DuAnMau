@@ -11,6 +11,7 @@ public class PlayerCollision : MonoBehaviour
     {
         gameManager = FindObjectOfType<GameManager>();
         audioManager = FindObjectOfType<AudioManager>();
+        rb = GetComponent<Rigidbody2D>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

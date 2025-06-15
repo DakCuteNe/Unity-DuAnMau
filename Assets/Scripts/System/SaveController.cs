@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class SaveController : MonoBehaviour
 {
     private string savePath;
+    private InventoryController inventoryController;
+    private InventorySaveData inventorySaveData;
     public TMP_InputField nameInputField;
 
     void Start()
     {
         savePath = Path.Combine(Application.persistentDataPath, "saveData.json");
+        inventoryController = FindObjectOfType<InventoryController>();
+
+        LoadGame();
     }
 
     public void SaveGame()
@@ -28,6 +31,7 @@ public class SaveController : MonoBehaviour
         data.playerPosition = player.transform.position;
         data.mapBoundary = "MapBoundaryName";
         data.playerName = nameInputField != null ? nameInputField.text : "Unkown";
+        data.inventorySaveData = inventoryController.GetInventoryItem();
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(savePath, json);
@@ -50,5 +54,6 @@ public class SaveController : MonoBehaviour
             player.transform.position = data.playerPosition;
         }
         Debug.Log("Game Loaded!");
+        inventoryController.SetInventoryItem(data.inventorySaveData);   
     }
 }
